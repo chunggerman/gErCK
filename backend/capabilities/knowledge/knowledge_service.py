@@ -16,7 +16,6 @@ class KnowledgeService:
         self.web_search_fn = WebSearchFunction()
         self.prompt_engine_fn = PromptEngineFunction()
 
-        # 🔥 THIS LINE IS MISSING IN YOUR FILE
         self.llm_gateway = LLMGateway()
 
     def handle(self, question: str) -> str:
@@ -27,7 +26,15 @@ class KnowledgeService:
         search_results = self.web_search_fn.run(question)
         prompt = self.prompt_engine_fn.build_prompt(question, search_results)
 
-        # Now this works because llm_gateway exists
         answer = self.llm_gateway.run(prompt, capability="knowledge")
-
         return answer
+
+    def handle_chat(self, messages):
+        conversation = ""
+        for msg in messages:
+            role = msg.get("role", "user")
+            content = msg.get("content", "")
+            conversation += f"{role}: {content}\n"
+
+        prompt = conversation + "assistant:"
+        return self.llm_gateway.run(prompt, capability="knowledge")
