@@ -1,6 +1,7 @@
 class EmbeddingFunction:
     def __init__(self):
-        pass  # config will be added later
+        # config will be added later
+        pass
 
     def run(self, text: str):
         """

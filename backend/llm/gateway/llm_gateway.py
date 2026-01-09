@@ -4,6 +4,7 @@ from pathlib import Path
 from backend.llm.providers.ollama.ollama_provider import OllamaProvider
 # Future: from backend.llm.providers.gpt.gpt_provider import GPTProvider
 
+
 class LLMGateway:
     def __init__(self):
         # Load configs
@@ -40,8 +41,9 @@ class LLMGateway:
 
     def _select_model(self, capability: str):
         # Capability override
-        if capability and capability in self.routing.get("capability_overrides", {}):
-            return self.routing["capability_overrides"][capability]["model"]
+        overrides = self.routing.get("capability_overrides", {})
+        if capability and capability in overrides:
+            return overrides[capability]["model"]
 
         # Default
         return self.routing["default_model"]

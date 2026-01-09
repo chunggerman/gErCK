@@ -1,5 +1,5 @@
 import subprocess
-import json
+
 
 class OllamaProvider:
     def __init__(self, model_name="llama3"):
@@ -16,7 +16,7 @@ class OllamaProvider:
                 input=prompt.encode("utf-8"),
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
-                check=True
+                check=True,
             )
 
             output = result.stdout.decode("utf-8").strip()
