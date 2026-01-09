@@ -47,3 +47,4 @@ class LLMGateway:
 
         # Default
         return self.routing["default_model"]
+    
