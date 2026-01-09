@@ -204,25 +204,6 @@ Planned GitHub Actions workflow:
 
 ---
 
-# 🆘 Troubleshooting
-
-## Backend: ModuleNotFoundError: No module named 'backend'
-
-Run backend correctly:
-
-python -m uvicorn backend.main:app --reload
-
-## Port already in use
-
-lsof -i :8000
-kill -9 <PID>
-
-## Frontend cannot connect to backend
-
-Check CORS settings in backend/main.py.
-
----
-
 # 🎉 MVP Complete
 
 You now have:
