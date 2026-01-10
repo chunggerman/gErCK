@@ -9,5 +9,3 @@ class WebSearchFunction:
         Later this will call a real search API.
         """
         return [f"[search result for '{query}']"]
-
-

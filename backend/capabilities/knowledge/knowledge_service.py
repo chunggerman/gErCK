@@ -43,4 +43,3 @@ class KnowledgeService:
 
         prompt = conversation + "assistant:"
         return self.llm_gateway.run(prompt, capability="knowledge")
-
