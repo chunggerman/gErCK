@@ -36,7 +36,7 @@ jobs:
         working-directory: backend
         run: |
           pip install bandit
-          bandit -r .
+          bandit -c ../.bandit -r .
 
       - name: Run backend tests
         working-directory: backend
