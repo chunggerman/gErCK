@@ -1,58 +1,51 @@
 "use client";
 
-import { useState } from "react";
-import { ask } from "../lib/api";
+import { FormEvent, useState } from "react";
+import { askForKnowledge } from "../lib/api";
+
+interface AskFormProps {
+  onAnswer: (answer: string) => void;
+  onLoadingChange: (isLoading: boolean) => void;
+  onError: (error: string | null) => void;
+}
 
 export default function AskForm({
-  messages,
-  onAnswer
-}: {
-  messages: any[];
-  onAnswer: (newMessages: any[], answer: string) => void;
-}) {
-  const [question, setQuestion] = useState("");
-  const [loading, setLoading] = useState(false);
+  onAnswer,
+  onLoadingChange,
+  onError,
+}: AskFormProps) {
+  const [question, setQuestion] = useState<string>("");
 
-  async function handleSubmit(e: any) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setLoading(true);
+
+    if (!question.trim()) {
+      onError("Please enter a question.");
+      return;
+    }
+
+    onLoadingChange(true);
+    onError(null);
 
     try {
-      // Build new message list
-      const newMessages = [
-        ...messages,
-        { role: "user", content: question }
-      ];
-
-      // Send full chat history to backend
-      const result = await ask(newMessages);
-
-      // Pass updated messages + answer back to parent
-      onAnswer(newMessages, result.answer);
-
-      // Clear input
-      setQuestion("");
+      const result = await askForKnowledge(question);
+      onAnswer(result.answer);
+    } catch {
+      onError("Failed to get an answer from the backend.");
     } finally {
-      setLoading(false);
+      onLoadingChange(false);
     }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="ask-form">
       <input
-        className="border p-2 w-full"
-        placeholder="Ask something..."
+        type="text"
         value={question}
         onChange={(e) => setQuestion(e.target.value)}
+        placeholder="Ask for knowledge..."
       />
-
-      <button
-        type="submit"
-        className="bg-blue-600 text-white px-4 py-2 rounded"
-        disabled={loading}
-      >
-        {loading ? "Thinking..." : "Ask"}
-      </button>
+      <button type="submit">Ask</button>
     </form>
   );
 }

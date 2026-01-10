@@ -4,25 +4,22 @@ import { useState } from "react";
 import AskForm from "../components/AskForm";
 import AnswerPanel from "../components/AnswerPanel";
 
-export default function Home() {
-  const [messages, setMessages] = useState<any[]>([]);
-
-  // Updated to accept newMessages instead of question
-  function handleNewAnswer(newMessages: any[], answer: string) {
-    setMessages([
-      ...newMessages,
-      { role: "assistant", content: answer }
-    ]);
-  }
+export default function Page() {
+  const [answer, setAnswer] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   return (
-    <main className="max-w-2xl mx-auto py-10">
-      <h1 className="text-3xl font-bold mb-6">gErCK — Chat</h1>
+    <main style={{ padding: "2rem", maxWidth: 800, margin: "0 auto" }}>
+      <h1>Ask for Knowledge</h1>
 
-      {/* Pass messages into AskForm */}
-      <AskForm messages={messages} onAnswer={handleNewAnswer} />
+      <AskForm
+        onAnswer={setAnswer}
+        onLoadingChange={setIsLoading}
+        onError={setError}
+      />
 
-      <AnswerPanel messages={messages} />
+      <AnswerPanel answer={answer} isLoading={isLoading} error={error} />
     </main>
   );
 }

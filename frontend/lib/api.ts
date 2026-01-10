@@ -1,13 +1,18 @@
-export async function ask(messages: any[]) {
-  const response = await fetch("http://localhost:8000/ask", {
+import { AskResponse } from "./types";
+
+const BACKEND_BASE_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL ?? "http://localhost:8000";
+
+export async function askForKnowledge(question: string): Promise<AskResponse> {
+  const res = await fetch(`${BACKEND_BASE_URL}/ask`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ messages }),
+    body: JSON.stringify({ question }),
   });
 
-  if (!response.ok) {
+  if (!res.ok) {
     throw new Error("Backend error");
   }
 
-  return response.json();
+  return res.json() as Promise<AskResponse>;
 }

@@ -1,34 +1,41 @@
-import { useEffect, useRef } from "react";
+interface AnswerPanelProps {
+  answer: string;
+  isLoading: boolean;
+  error?: string | null;
+}
 
-export default function AnswerPanel({ messages }: { messages: any[] }) {
-  const containerRef = useRef<HTMLDivElement>(null);
+export default function AnswerPanel({
+  answer,
+  isLoading,
+  error,
+}: AnswerPanelProps) {
+  if (isLoading) {
+    return (
+      <div className="answer-panel">
+        <p>Thinking...</p>
+      </div>
+    );
+  }
 
-  // Auto-scroll when messages change
-  useEffect(() => {
-    if (containerRef.current) {
-      containerRef.current.scrollTop = containerRef.current.scrollHeight;
-    }
-  }, [messages]);
+  if (error) {
+    return (
+      <div className="answer-panel">
+        <p style={{ color: "red" }}>{error}</p>
+      </div>
+    );
+  }
 
-  if (!messages.length) return null;
+  if (!answer) {
+    return (
+      <div className="answer-panel">
+        <p>No answer yet. Ask something above.</p>
+      </div>
+    );
+  }
 
   return (
-    <div
-      ref={containerRef}
-      className="mt-6 p-4 border rounded bg-gray-50 flex flex-col space-y-4 h-[400px] overflow-y-auto"
-    >
-      {messages.map((msg, i) => (
-        <div
-          key={i}
-          className={
-            msg.role === "user"
-              ? "bg-blue-100 text-blue-900 p-3 rounded-lg self-end max-w-[80%]"
-              : "bg-green-100 text-green-900 p-3 rounded-lg self-start max-w-[80%]"
-          }
-        >
-          {msg.content}
-        </div>
-      ))}
+    <div className="answer-panel">
+      <p>{answer}</p>
     </div>
   );
 }
