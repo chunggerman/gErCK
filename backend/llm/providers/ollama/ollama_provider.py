@@ -11,13 +11,13 @@ class OllamaProvider:
         This assumes Ollama is installed and running locally.
         """
         try:
-            result = subprocess.run(  # nosec B603,B607
+            result = subprocess.run(
                 ["ollama", "run", self.model_name],
                 input=prompt.encode("utf-8"),
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 check=True,
-            )
+            )  # nosec B603,B607
 
             output = result.stdout.decode("utf-8").strip()
             return output
