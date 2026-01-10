@@ -1,2 +1,2 @@
-[bandit]
-skips = B603
+skips:
+  - B603
