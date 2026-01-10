@@ -1,4 +1,4 @@
-import subprocess # nosec
+import subprocess  # nosec
 
 
 class OllamaProvider:
