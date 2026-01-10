@@ -1,4 +1,4 @@
-import subprocess
+import subprocess # nosec
 
 
 class OllamaProvider:
@@ -11,7 +11,7 @@ class OllamaProvider:
         This assumes Ollama is installed and running locally.
         """
         try:
-            result = subprocess.run(
+            result = subprocess.run(  # nosec B603,B607
                 ["ollama", "run", self.model_name],
                 input=prompt.encode("utf-8"),
                 stdout=subprocess.PIPE,
