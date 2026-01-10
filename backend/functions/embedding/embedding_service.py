@@ -9,4 +9,4 @@ class EmbeddingFunction:
         Later this will call a real embedding model.
         """
         return f"[embedding for '{text}']"
-    
+

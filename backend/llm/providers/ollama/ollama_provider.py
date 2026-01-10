@@ -24,4 +24,4 @@ class OllamaProvider:
 
         except Exception as e:
             return f"[Ollama error: {str(e)}]"
-        
+

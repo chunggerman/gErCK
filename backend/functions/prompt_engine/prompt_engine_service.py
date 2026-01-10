@@ -12,4 +12,4 @@ class PromptEngineFunction:
             f"Question: {question}\n"
             f"Search Results: {search_results}"
         )
-    
+

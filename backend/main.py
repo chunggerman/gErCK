@@ -29,3 +29,4 @@ def ask_question(payload: dict):
     messages = payload.get("messages", [])
     answer = knowledge_service.handle_chat(messages)
     return {"messages": messages, "answer": answer}
+
