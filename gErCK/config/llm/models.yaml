@@ -1,0 +1,20 @@
+models:
+  ollama_llama3:
+    provider: ollama
+    model_name: "llama3"
+    description: "Local Llama 3 model running via Ollama"
+
+  ollama_mistral:
+    provider: ollama
+    model_name: "mistral"
+    description: "Local Mistral model running via Ollama"
+
+  gpt_4o:
+    provider: openai
+    model_name: "gpt-4o"
+    description: "OpenAI GPT-4o (cloud)"
+
+  claude_3_haiku:
+    provider: anthropic
+    model_name: "claude-3-haiku"
+    description: "Anthropic Claude 3 Haiku (cloud)"
