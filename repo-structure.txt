@@ -1,0 +1,516 @@
+.
+├── .DS_Store
+├── .env
+├── .git
+│   ├── COMMIT_EDITMSG
+│   ├── HEAD
+│   ├── config
+│   ├── description
+│   ├── hooks
+│   │   ├── applypatch-msg.sample
+│   │   ├── commit-msg.sample
+│   │   ├── fsmonitor-watchman.sample
+│   │   ├── post-update.sample
+│   │   ├── pre-applypatch.sample
+│   │   ├── pre-commit.sample
+│   │   ├── pre-merge-commit.sample
+│   │   ├── pre-push.sample
+│   │   ├── pre-rebase.sample
+│   │   ├── pre-receive.sample
+│   │   ├── prepare-commit-msg.sample
+│   │   ├── push-to-checkout.sample
+│   │   ├── sendemail-validate.sample
+│   │   └── update.sample
+│   ├── index
+│   ├── info
+│   │   └── exclude
+│   ├── logs
+│   │   ├── HEAD
+│   │   └── refs
+│   │       ├── heads
+│   │       │   └── main
+│   │       └── remotes
+│   │           └── origin
+│   │               └── main
+│   ├── objects
+│   │   ├── 03
+│   │   │   └── fd6c6d85b79345236b5c9c36b0e96f57cad38f
+│   │   ├── 04
+│   │   │   ├── 4d57cdb0d5b5bff3475112359a4ee70439bf78
+│   │   │   └── 884791ad8c96b33e2a82b6b58bef7a7ab3a7cf
+│   │   ├── 07
+│   │   │   └── 0ed73abafcde09bbf390d9651dbfd1f30583c8
+│   │   ├── 0b
+│   │   │   └── 9f324bc80894550a735c947869cc17e6f1f751
+│   │   ├── 0c
+│   │   │   └── 98e2b65c4a9295cea82db89d4df506cabcd822
+│   │   ├── 0d
+│   │   │   ├── 335305bf2662b803fea4798054d68ef2e8c280
+│   │   │   └── 7df8781fc8cbd6aa8173d812f46b4d03f33815
+│   │   ├── 0f
+│   │   │   └── e025207289d258b68b6ab5a70e1ccc2a1f0dde
+│   │   ├── 10
+│   │   │   └── 9010ea5da5c814a02a36d92b77265f19933ae7
+│   │   ├── 14
+│   │   │   └── 0b2872b3e380a0ad50d6a15388482498f6f5c8
+│   │   ├── 18
+│   │   │   └── f6f9d6aa8aef6b154405ad7128339f1e8ea07c
+│   │   ├── 1d
+│   │   │   └── 32a26d4989e8db72cc488fc3b9cfb993f68870
+│   │   ├── 21
+│   │   │   ├── 695a07d7c0770d9d70a708bcc136cccaa40914
+│   │   │   └── e3685ec84ae7a5ee55b7a12c54612d65546b3a
+│   │   ├── 22
+│   │   │   └── 2785fc7cf0a14d155f09f9013ce4d9b60750a6
+│   │   ├── 23
+│   │   │   └── c68e990d3b875d5e5a6b1959b93cd6053f9e5d
+│   │   ├── 25
+│   │   │   └── c1d5c728f6325a727978a8f23e1e1887634a42
+│   │   ├── 26
+│   │   │   └── 33f8f0780759ba6cc419655f7bb505654e7832
+│   │   ├── 27
+│   │   │   └── 3939f01e88c8e9300f9d801986dcc3fb58d1eb
+│   │   ├── 28
+│   │   │   └── 5776d86ce12b0696f7db7a9b6302c88753eb20
+│   │   ├── 2a
+│   │   │   └── 5c1cb3a359a09b393e3eae2ad0fd54bd22133c
+│   │   ├── 2d
+│   │   │   ├── 14b8b5eba956a83575db4d8516ac65aa732dad
+│   │   │   └── 325303c08281477929ec44a3540f13fa337341
+│   │   ├── 30
+│   │   │   ├── 185944395599d56e1794ed07384cc99ef78bee
+│   │   │   └── dc506098ef9d464c4d8e77436f433649ead969
+│   │   ├── 33
+│   │   │   └── 274f852010dff4033feac792809126ef1d1ed2
+│   │   ├── 34
+│   │   │   └── b1c4bcae928235d9dc6ce25832eec72fa2eff9
+│   │   ├── 3c
+│   │   │   └── 2473286ea4b6beaa1c118a63b5630ee40e1341
+│   │   ├── 3e
+│   │   │   └── 09f4ab47a2ce945574223b142b771e76e29612
+│   │   ├── 43
+│   │   │   └── 13478225aac3863a4ff82b6073c80d9ed2b4d4
+│   │   ├── 45
+│   │   │   └── e2c774d140b8bf00b199a8a181589bbda4759e
+│   │   ├── 4c
+│   │   │   └── 56294c35be41d6571f93891eaf703e58bf340f
+│   │   ├── 54
+│   │   │   └── e0c77e2826100808d8456cc99b29e09801ffaf
+│   │   ├── 57
+│   │   │   └── 5a0347c7e8d4e9f50e15c04c33c2707f09497a
+│   │   ├── 58
+│   │   │   └── 85e0f44d2df090960c1f529a58ce65e3f06859
+│   │   ├── 5f
+│   │   │   └── b3676e30b6a49a54b15223538cba7e10607f27
+│   │   ├── 65
+│   │   │   ├── 538afa44ba082cbd0f7078f9b513f6b4ed7b7f
+│   │   │   └── f35326b8e68bdaa5a1c4095b8fcd43cfe377b5
+│   │   ├── 67
+│   │   │   └── e633abc05a552fa51fdb3ff478ec17cdf5192a
+│   │   ├── 6a
+│   │   │   └── 217ade172f028aa3cae0a4bb2972488505f031
+│   │   ├── 6f
+│   │   │   └── ccc96265c41fe3d45ef2b5833884571a6761ed
+│   │   ├── 73
+│   │   │   └── 2ac8c838820a7be93bef9f270fbed211051a28
+│   │   ├── 75
+│   │   │   └── a68d447d9a74af5be892324949fe2ef04e9386
+│   │   ├── 77
+│   │   │   └── 13c446a775c2354b30f9a1aadaa179010a27d1
+│   │   ├── 79
+│   │   │   └── 0e10883302a1e9e257fa5583031a89d396e08f
+│   │   ├── 7a
+│   │   │   └── 38600519912eb382179555a8053c6b3708f727
+│   │   ├── 7c
+│   │   │   └── 6128e14bcadc71c4cd6e4baee206af769724a3
+│   │   ├── 83
+│   │   │   ├── 1a20fa83a22b5b1735aa34a78ec276f7c05e4c
+│   │   │   └── 2b13b050cafd2472a7f7dee4788f232707faec
+│   │   ├── 8c
+│   │   │   └── 84fc3cf3012e577f17b33598a4d5b3817d5d03
+│   │   ├── 8d
+│   │   │   └── 34511f973ad6df1c138fdcd7aebee6b7dba9ce
+│   │   ├── 91
+│   │   │   ├── c53276fe0605c629bd709b84df162d1f0242af
+│   │   │   └── d2002129c4e5dbd921fb299f19e3b25e66b756
+│   │   ├── 96
+│   │   │   ├── 0634c0421d83c2cc71ebd727e186d9453e9daf
+│   │   │   └── 3cc8d5b899eca4f8185c0cea5a7acb3db329cd
+│   │   ├── 97
+│   │   │   └── 9461b315fc753054bce0975dda56515b2c3b15
+│   │   ├── 9c
+│   │   │   └── 9e7c03af6865b1f5f25c7848a33524c08cf7ba
+│   │   ├── 9e
+│   │   │   └── 5e001da43bffa79d9cd1bc3c84bbb1b0974be4
+│   │   ├── a1
+│   │   │   └── a45eaa048a70b206abbd920198c581d626a578
+│   │   ├── a2
+│   │   │   └── 640877a5f22849089c6064067ea1800d0ab395
+│   │   ├── a3
+│   │   │   └── 8b416255b22fa4148f4f4c453e9332000ea088
+│   │   ├── a4
+│   │   │   └── 25396586427b46dc94a6a3c03cb9f22443350f
+│   │   ├── a7
+│   │   │   └── 7385b6ebdf2040c0bd73ddc17ceeebcc2d9e1d
+│   │   ├── aa
+│   │   │   └── 2e2731f695ff2c02a4d074565841121468540b
+│   │   ├── ae
+│   │   │   └── 59a68a64f94c629998da51008a161e8192d435
+│   │   ├── b0
+│   │   │   └── 59241c5aabaef15bde82f4f10ced6d5cacfe80
+│   │   ├── b1
+│   │   │   └── 4ae28f3929c02fa9e91a159f914a14d246ec47
+│   │   ├── b8
+│   │   │   └── 57a638cf31faabe4e908a9ca23ecd501e887d2
+│   │   ├── b9
+│   │   │   └── 759b1498fb896d04ac29d7997eabe8248a9247
+│   │   ├── ba
+│   │   │   └── a33c5a169289dc77dfa60426c593d6b9de2343
+│   │   ├── bc
+│   │   │   └── 984800da9118acdad41b3a32109181b52ad75a
+│   │   ├── bd
+│   │   │   └── 516fa3346abdab96c2cb7e524f2121665b9f57
+│   │   ├── bf
+│   │   │   └── 8713170f9aa1bbdc793403ff4f2a3c3cac7352
+│   │   ├── c1
+│   │   │   ├── 0619ca16f12ff04e65c79fe69727cba0abde8a
+│   │   │   └── dc252ca90e1dd3d9b5ef5ac7e5d2f566f4f89c
+│   │   ├── c3
+│   │   │   ├── a4173d1c46114a8082cc05e3aef423d7b198e4
+│   │   │   ├── e6e5a172ea5d99aa678583ce6292a8b60f7735
+│   │   │   └── f248b82dccc312f098695c842df0f133fe0936
+│   │   ├── c5
+│   │   │   └── 29a9e1d04bc3e637dfb5600cfe455c1cad4045
+│   │   ├── c6
+│   │   │   └── 85d811c3a0b8beebf26e40f03ea1e05c2656ea
+│   │   ├── c7
+│   │   │   └── 151368fbe069064df6ff9d0c2d0f82a7864ae5
+│   │   ├── cb
+│   │   │   └── 1f5545235a9bf727080de60515b1a5abeeffe8
+│   │   ├── cc
+│   │   │   ├── 89d15dc23e69c84ea5c49422d8cf7fd0026087
+│   │   │   └── af4b143855a73684503346c77dd473bb25844b
+│   │   ├── cd
+│   │   │   └── f18c9685a9679e5252cb65904d77d42ebfbae6
+│   │   ├── ce
+│   │   │   ├── c38f62ad27cd98aece7dee428b25094c9611a5
+│   │   │   └── cdd5361404ec659ce13df10401dcc33e29b348
+│   │   ├── d0
+│   │   │   └── 91cbb628cd164d47a2e9526c007c90fffa0cf3
+│   │   ├── d3
+│   │   │   └── 57c675b752e81f40f1d2e9c000d0badf23d624
+│   │   ├── d5
+│   │   │   └── e94aae8756d65a4dcaa38753f76f4e5f2d173a
+│   │   ├── dd
+│   │   │   └── 106a5bc3292b02563854fbeeb99a3f4761f9ce
+│   │   ├── df
+│   │   │   └── 99d964adad3be63e2c9b7c4d60373df5bcfecf
+│   │   ├── e0
+│   │   │   └── d8ae4ea7b3e54c4ed87945d7e72493c3ce2591
+│   │   ├── e4
+│   │   │   └── 20fb64431bbf9b51f9141cd55607af7961c092
+│   │   ├── e6
+│   │   │   └── 9de29bb2d1d6434b8b29ae775ad8c2e48c5391
+│   │   ├── e8
+│   │   │   ├── 276d493c437ac410f0f81a316804bee47bf9a3
+│   │   │   ├── 55ca346e08264eea79fa4a77d5fb1512e6d3c9
+│   │   │   └── 95cd49c399f41f7b9b069b80bcf0a229566fb9
+│   │   ├── ea
+│   │   │   ├── 332210ee9ad0663494c5446c3f6f9230e7240f
+│   │   │   └── 95b183c5a6193825a274a53984939e1864daf5
+│   │   ├── ed
+│   │   │   └── 6fa724a5148f43884b0e592b20d29dc996885f
+│   │   ├── f1
+│   │   │   └── 9dd784438acc05f4a7b49b8f57ea095e29a582
+│   │   ├── f3
+│   │   │   └── ab4961907bbb7df4677a5d17a04e98ac14cd2b
+│   │   ├── f4
+│   │   │   └── 38c87a24c680d7cc07afa9cef18a1bc7256844
+│   │   ├── f5
+│   │   │   ├── 331f5cec00c1d76505a410af675e384a78e6f2
+│   │   │   └── 3cdbb0e8e30f7e25c8679e760d53776794b00b
+│   │   ├── f6
+│   │   │   ├── 19db77ca0f9daade20aeac5455619c4dbd23df
+│   │   │   └── 7d16d27af21a45e3e5fad9cabffd061d281ab7
+│   │   ├── f8
+│   │   │   └── 3541064883901c7f70b6c0f8d328eb05de9d6e
+│   │   ├── fa
+│   │   │   └── cb3f144686d471c3efcd5785b37d3445a3b546
+│   │   ├── fd
+│   │   │   ├── 46165a451b001e7050a1b00ac3e7baebbcd50d
+│   │   │   └── a3915186914ae1f14c06cdaa7319c74ededc9a
+│   │   ├── info
+│   │   └── pack
+│   └── refs
+│       ├── heads
+│       │   └── main
+│       ├── remotes
+│       │   └── origin
+│       │       └── main
+│       └── tags
+├── .gitignore
+├── LICENSE
+├── README.md
+├── backend
+│   ├── .DS_Store
+│   ├── .env
+│   ├── .gitkeep
+│   ├── eslint.config.js
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── src
+│   │   ├── .DS_Store
+│   │   ├── app
+│   │   │   ├── controllers
+│   │   │   │   ├── assistantController.js
+│   │   │   │   ├── contentController.js
+│   │   │   │   └── workspaceController.js
+│   │   │   ├── middleware
+│   │   │   ├── routes
+│   │   │   │   ├── assistantRoutes.js
+│   │   │   │   ├── contentRoutes.js
+│   │   │   │   ├── documentsRoutes.js
+│   │   │   │   └── workspaceRoutes.js
+│   │   │   ├── server.js
+│   │   │   └── services
+│   │   │       ├── documentService.js
+│   │   │       ├── embeddingService.js
+│   │   │       ├── llmService.js
+│   │   │       ├── ragService.js
+│   │   │       └── workspaceService.js
+│   │   ├── config
+│   │   │   └── env.js
+│   │   ├── domain
+│   │   │   ├── entities
+│   │   │   │   └── workspace.js
+│   │   │   └── services
+│   │   │       ├── chunkingService.js
+│   │   │       └── embeddingService.js
+│   │   ├── infra
+│   │   │   └── db
+│   │   │       └── migrations
+│   │   │           └── 005_create_workspace_template.sql
+│   │   ├── repositories
+│   │   │   ├── interfaces
+│   │   │   │   ├── chunkRepository.js
+│   │   │   │   ├── contentRepository.js
+│   │   │   │   └── workspaceRepository.js
+│   │   │   └── postgres
+│   │   │       ├── chunkRepositoryPostgres.js
+│   │   │       ├── contentRepositoryPostgres.js
+│   │   │       └── workspaceRepositoryPostgres.js
+│   │   └── utils
+│   │       └── deepMerge.js
+│   └── uploads
+│       ├── 1768629607946-713932898-BA Workshop.pptx
+│       ├── 1768629935335-345807349-BA Workshop.pptx
+│       ├── 1768630980489-507545771-BA Workshop.pptx
+│       ├── 1768637918066-344734938-BA Workshop.pptx
+│       ├── 1768638193784-525384111-BA Workshop.pptx
+│       ├── 1768638469993-263947013-BA Workshop.pptx
+│       ├── 1768638989707-3996165-BA Workshop.pptx
+│       ├── 1768639132848-410756906-BA Workshop.pptx
+│       ├── 1768640995818-357910074-BA Workshop.pptx
+│       ├── 1768641521836-332699628-BA Workshop.pptx
+│       └── 1768828514579-277113992-Tech Sharing- DG in DP.pptx
+├── config
+│   ├── capabilities
+│   │   └── knowledge.yaml
+│   ├── functions
+│   │   ├── embedding.yaml
+│   │   ├── prompt_engine.yaml
+│   │   └── web_search.yaml
+│   └── llm
+│       ├── limits.yaml
+│       ├── models.yaml
+│       └── routing.yaml
+├── db
+│   ├── docker-compose.yml
+│   ├── readme.md
+│   └── schema.sql
+├── doc
+│   ├── mission.md
+│   ├── phase-0
+│   │   ├── architecture.md
+│   │   ├── backend_foundation.md
+│   │   ├── config_foundation.md
+│   │   ├── deliverables.md
+│   │   ├── folder_structure.md
+│   │   ├── frontend_foundation.md
+│   │   ├── goal.md
+│   │   └── objective.md
+│   ├── phase-1
+│   │   ├── API-contract.md
+│   │   ├── README.md
+│   │   ├── architecture.md
+│   │   ├── backend-serivce-design.md
+│   │   ├── database-schema.md
+│   │   ├── db-schema.md
+│   │   ├── deliverables.md
+│   │   ├── folder-structure.md
+│   │   ├── frontend-service-design.md
+│   │   ├── goals.md
+│   │   ├── implementation-checklist.md
+│   │   ├── implementation-items.md
+│   │   ├── implementation-plan.md
+│   │   ├── objective.md
+│   │   ├── sequence-diagrams.md
+│   │   ├── test-case-validation.md
+│   │   └── test-scenarios.md
+│   └── step-5
+│       ├── README.md
+│       ├── ai-runtime-config.md
+│       ├── api-endpoints.md
+│       ├── migration-guide.md
+│       ├── retrieval-engine.md
+│       └── summarization.md
+├── frontend
+│   ├── .DS_Store
+│   ├── .git
+│   │   ├── COMMIT_EDITMSG
+│   │   ├── HEAD
+│   │   ├── config
+│   │   ├── description
+│   │   ├── hooks
+│   │   │   ├── applypatch-msg.sample
+│   │   │   ├── commit-msg.sample
+│   │   │   ├── fsmonitor-watchman.sample
+│   │   │   ├── post-update.sample
+│   │   │   ├── pre-applypatch.sample
+│   │   │   ├── pre-commit.sample
+│   │   │   ├── pre-merge-commit.sample
+│   │   │   ├── pre-push.sample
+│   │   │   ├── pre-rebase.sample
+│   │   │   ├── pre-receive.sample
+│   │   │   ├── prepare-commit-msg.sample
+│   │   │   ├── push-to-checkout.sample
+│   │   │   ├── sendemail-validate.sample
+│   │   │   └── update.sample
+│   │   ├── index
+│   │   ├── info
+│   │   │   ├── exclude
+│   │   │   └── refs
+│   │   ├── logs
+│   │   │   ├── HEAD
+│   │   │   └── refs
+│   │   │       ├── heads
+│   │   │       │   └── main
+│   │   │       └── remotes
+│   │   │           └── origin
+│   │   │               └── main
+│   │   ├── objects
+│   │   │   ├── 4b
+│   │   │   │   └── 825dc642cb6eb9a060e54bf8d69288fbee4904
+│   │   │   ├── 8f
+│   │   │   │   └── tmp_obj_jfOkAl
+│   │   │   ├── info
+│   │   │   │   ├── commit-graph
+│   │   │   │   └── packs
+│   │   │   └── pack
+│   │   │       ├── pack-7d0ebb5f207b31604e703c658da7cbadceb0afc2.idx
+│   │   │       ├── pack-7d0ebb5f207b31604e703c658da7cbadceb0afc2.pack
+│   │   │       └── pack-7d0ebb5f207b31604e703c658da7cbadceb0afc2.rev
+│   │   └── refs
+│   │       ├── heads
+│   │       │   └── main
+│   │       ├── remotes
+│   │       │   └── origin
+│   │       │       └── main
+│   │       └── tags
+│   ├── ATTRIBUTIONS.md
+│   ├── README.md
+│   ├── guidelines
+│   │   └── Guidelines.md
+│   ├── index.html
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── postcss.config.mjs
+│   ├── src
+│   │   ├── .DS_Store
+│   │   ├── app
+│   │   │   ├── App.tsx
+│   │   │   ├── components
+│   │   │   │   ├── assistant-card.tsx
+│   │   │   │   ├── chat-interface.tsx
+│   │   │   │   ├── data-card.tsx
+│   │   │   │   ├── figma
+│   │   │   │   │   └── ImageWithFallback.tsx
+│   │   │   │   ├── navigation-panel.tsx
+│   │   │   │   ├── reference-card.tsx
+│   │   │   │   └── ui
+│   │   │   │       ├── accordion.tsx
+│   │   │   │       ├── alert-dialog.tsx
+│   │   │   │       ├── alert.tsx
+│   │   │   │       ├── aspect-ratio.tsx
+│   │   │   │       ├── avatar.tsx
+│   │   │   │       ├── badge.tsx
+│   │   │   │       ├── breadcrumb.tsx
+│   │   │   │       ├── button.tsx
+│   │   │   │       ├── calendar.tsx
+│   │   │   │       ├── card.tsx
+│   │   │   │       ├── carousel.tsx
+│   │   │   │       ├── chart.tsx
+│   │   │   │       ├── checkbox.tsx
+│   │   │   │       ├── collapsible.tsx
+│   │   │   │       ├── command.tsx
+│   │   │   │       ├── context-menu.tsx
+│   │   │   │       ├── dialog.tsx
+│   │   │   │       ├── drawer.tsx
+│   │   │   │       ├── dropdown-menu.tsx
+│   │   │   │       ├── form.tsx
+│   │   │   │       ├── hover-card.tsx
+│   │   │   │       ├── input-otp.tsx
+│   │   │   │       ├── input.tsx
+│   │   │   │       ├── label.tsx
+│   │   │   │       ├── menubar.tsx
+│   │   │   │       ├── navigation-menu.tsx
+│   │   │   │       ├── pagination.tsx
+│   │   │   │       ├── popover.tsx
+│   │   │   │       ├── progress.tsx
+│   │   │   │       ├── radio-group.tsx
+│   │   │   │       ├── resizable.tsx
+│   │   │   │       ├── scroll-area.tsx
+│   │   │   │       ├── select.tsx
+│   │   │   │       ├── separator.tsx
+│   │   │   │       ├── sheet.tsx
+│   │   │   │       ├── sidebar.tsx
+│   │   │   │       ├── skeleton.tsx
+│   │   │   │       ├── slider.tsx
+│   │   │   │       ├── sonner.tsx
+│   │   │   │       ├── switch.tsx
+│   │   │   │       ├── table.tsx
+│   │   │   │       ├── tabs.tsx
+│   │   │   │       ├── textarea.tsx
+│   │   │   │       ├── toggle-group.tsx
+│   │   │   │       ├── toggle.tsx
+│   │   │   │       ├── tooltip.tsx
+│   │   │   │       ├── use-mobile.ts
+│   │   │   │       └── utils.ts
+│   │   │   └── pages
+│   │   │       ├── builder-workspace.tsx
+│   │   │       ├── certification.tsx
+│   │   │       ├── data-list.tsx
+│   │   │       ├── new-assistant.tsx
+│   │   │       ├── new-data.tsx
+│   │   │       ├── new-reference.tsx
+│   │   │       ├── reference-list.tsx
+│   │   │       └── user-chat.tsx
+│   │   ├── main.tsx
+│   │   └── styles
+│   │       ├── fonts.css
+│   │       ├── index.css
+│   │       ├── tailwind.css
+│   │       └── theme.css
+│   └── vite.config.ts
+├── prisma
+│   ├── migrations
+│   │   ├── 20260120132641_init_templates
+│   │   │   └── migration.sql
+│   │   └── migration_lock.toml
+│   ├── prisma.config.ts
+│   └── schema.prisma
+├── prisma.config.ts
+├── repo-structure.txt
+└── requirements.txt
+
+168 directories, 346 files
