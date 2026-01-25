@@ -1,0 +1,9 @@
+default_model: ollama_llama3
+
+capability_overrides:
+  knowledge:
+    model: ollama_llama3
+
+function_overrides:
+  prompt_engine:
+    model: ollama_llama3
