@@ -1,0 +1,179 @@
+// backend/src/app/services/dataQueryService.js
+
+import { db } from "../../infra/db/client.js";
+import { callLLM } from "./llmService.js";
+
+/**
+ * 1. Introspect workspace-related tables.
+ *    This gives the LLM enough structure to generate valid SQL.
+ */
+async function getWorkspaceSchema() {
+  const tables = [
+    "workspace",
+    "content",
+    "content_chunk",
+    "tag",
+    "content_chunk_tag",
+    "conversation",
+    "message",
+    "conversation_summary"
+  ];
+
+  const schema = {};
+
+  for (const table of tables) {
+    const result = await db.query(
+      `
+      SELECT column_name, data_type
+      FROM information_schema.columns
+      WHERE table_name = $1
+      ORDER BY ordinal_position
+      `,
+      [table]
+    );
+
+    schema[table] = result.rows;
+  }
+
+  return schema;
+}
+
+/**
+ * 2. Build a schema prompt for the LLM.
+ */
+function buildSchemaPrompt(schema) {
+  let out = "Database Schema:\n\n";
+
+  for (const [table, columns] of Object.entries(schema)) {
+    out += `Table: ${table}\n`;
+    for (const col of columns) {
+      out += `  - ${col.column_name}: ${col.data_type}\n`;
+    }
+    out += "\n";
+  }
+
+  return out;
+}
+
+/**
+ * 3. Ask LLM to generate SQL based on question + schema.
+ */
+async function generateSQL({ question, schemaPrompt, workspaceId, model }) {
+  const prompt = `
+You are a SQL generation engine.
+
+You will receive:
+- A natural language question
+- A database schema
+- A workspaceId filter
+
+Your job:
+- Generate a single SQL query
+- Use ONLY the tables and columns in the schema
+- Always filter by workspace_id when relevant
+- Do NOT include explanations, only SQL
+
+Schema:
+${schemaPrompt}
+
+Question:
+${question}
+
+Workspace ID:
+${workspaceId}
+
+Return ONLY the SQL query.
+`;
+
+  const sql = await callLLM(prompt, { model });
+  return sql.trim().replace(/;$/, ""); // remove trailing semicolon
+}
+
+/**
+ * 4. Execute SQL safely.
+ */
+async function executeSQL(sql) {
+  try {
+    const result = await db.query(sql);
+    return { rows: result.rows, error: null };
+  } catch (err) {
+    return { rows: [], error: err.message };
+  }
+}
+
+/**
+ * 5. Summarize SQL results into a natural language answer.
+ */
+async function summarizeSQLResult({ question, rows, error, model }) {
+  if (error) {
+    return `The SQL query failed: ${error}`;
+  }
+
+  if (!rows.length) {
+    return "No matching data found.";
+  }
+
+  const prompt = `
+You are a data analysis assistant.
+
+Question:
+${question}
+
+SQL Result Rows:
+${JSON.stringify(rows, null, 2)}
+
+Instructions:
+- Summarize the result clearly.
+- Highlight key values.
+- If the result is a list, summarize patterns.
+- If it's a single row, explain the fields.
+- Keep it concise and factual.
+
+Answer:
+`;
+
+  return await callLLM(prompt, { model });
+}
+
+/**
+ * 6. Full Data‑Mode pipeline:
+ *    - inspect schema
+ *    - generate SQL
+ *    - execute SQL
+ *    - summarize
+ */
+export async function answerDataQuestion({
+  workspaceId,
+  question,
+  model = "llama3.1"
+}) {
+  // 1. Load schema
+  const schema = await getWorkspaceSchema();
+  const schemaPrompt = buildSchemaPrompt(schema);
+
+  // 2. Generate SQL
+  const sql = await generateSQL({
+    question,
+    schemaPrompt,
+    workspaceId,
+    model
+  });
+
+  // 3. Execute SQL
+  const { rows, error } = await executeSQL(sql);
+
+  // 4. Summarize
+  const answer = await summarizeSQLResult({
+    question,
+    rows,
+    error,
+    model
+  });
+
+  return {
+    sql,
+    rows,
+    answer,
+    error
+  };
+}

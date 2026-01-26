@@ -1,24 +1,23 @@
-// backend/src/app/routes/workspaceRoutes.js
-
 import express from "express";
 import {
-  getWorkspaceSettings,
-  updateWorkspaceSettings
-} from "../services/workspaceService.js";
+  createWorkspace,
+  listWorkspaces,
+  getWorkspaceAIConfig,
+  updateWorkspaceAIConfig
+} from "../controllers/workspaceController.js";
 
 const router = express.Router();
 
-router.get("/:workspaceId/settings", (req, res) => {
-  const { workspaceId } = req.params;
-  const settings = getWorkspaceSettings(workspaceId);
-  res.json(settings);
-});
+// Create workspace
+router.post("/", createWorkspace);
 
-router.put("/:workspaceId/settings", (req, res) => {
-  const { workspaceId } = req.params;
-  const newSettings = req.body;
-  const updated = updateWorkspaceSettings(workspaceId, newSettings);
-  res.json(updated);
-});
+// List all workspaces
+router.get("/", listWorkspaces);
+
+// Get workspace AI config
+router.get("/:id/ai-config", getWorkspaceAIConfig);
+
+// Update workspace AI config
+router.put("/:id/ai-config", updateWorkspaceAIConfig);
 
 export default router;

@@ -1,5 +1,3 @@
-// backend/src/app/server.js
-
 import "../config/env.js";
 
 import express from "express";
@@ -10,6 +8,7 @@ import workspaceRoutes from "./routes/workspaceRoutes.js";
 import contentRoutes from "./routes/contentRoutes.js";
 import assistantRoutes from "./routes/assistantRoutes.js";
 import documentsRoutes from "./routes/documentsRoutes.js";
+import chatRoutes from "./routes/chatRoutes.js";
 
 import { env } from "../config/env.js";
 
@@ -18,6 +17,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Debug logging (optional but recommended)
+app.use((req, res, next) => {
+  console.log(`[${req.method}] ${req.url}`);
+  next();
+});
+
+// Static uploads
 app.use("/uploads", express.static(path.join(process.cwd(), "uploads")));
 
 console.log("SERVER STARTING WITH ENV:", {
@@ -28,13 +34,22 @@ console.log("SERVER STARTING WITH ENV:", {
   name: env.DB_NAME
 });
 
+// API routes
 app.use("/api/workspaces", workspaceRoutes);
 app.use("/api/content", contentRoutes);
-app.use("/api/assistant", assistantRoutes);
+app.use("/api/assistants", assistantRoutes);   // FIXED
 app.use("/api/documents", documentsRoutes);
+app.use("/api/chat", chatRoutes);              // ADDED
 
-const PORT = env.PORT;
+// Global error handler
+app.use((err, req, res, next) => {
+  console.error("GLOBAL ERROR:", err);
+  res.status(500).json({ error: "Internal server error" });
+});
+
+// Port
+const PORT = env.PORT || 4000;
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
 });

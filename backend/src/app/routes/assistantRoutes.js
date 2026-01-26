@@ -1,14 +1,15 @@
-// backend/src/app/routes/assistantRoutes.js
-
 import express from "express";
 import {
-  handleAssistantMessage,
-  handleAssistantQuery
+  createAssistant,
+  getAssistant,
+  updateAssistant
 } from "../controllers/assistantController.js";
 
 const router = express.Router();
 
-router.post("/message", handleAssistantMessage);
-router.post("/query", handleAssistantQuery);
+// Builder endpoints
+router.post("/", createAssistant);
+router.get("/:id", getAssistant);
+router.put("/:id", updateAssistant);
 
 export default router;

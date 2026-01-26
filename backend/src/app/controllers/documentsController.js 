@@ -1,0 +1,127 @@
+// backend/src/app/controllers/documentsController.js
+
+import { ingestContent } from "../services/ingestService.js";
+import { ContentRepositoryPostgres } from "../../repositories/postgres/contentRepositoryPostgres.js";
+import { ContentChunkRepositoryPostgres } from "../../repositories/postgres/contentChunkRepositoryPostgres.js";
+
+const contentRepo = new ContentRepositoryPostgres();
+const chunkRepo = new ContentChunkRepositoryPostgres();
+
+/**
+ * POST /api/documents/upload
+ * Ingest a new document into the workspace.
+ */
+export async function uploadDocument(req, res) {
+  try {
+    const { workspaceId, title, sourceType, metadata } = req.body;
+    const file = req.body.file || null; // frontend sends extracted text or raw file content
+
+    if (!workspaceId || !title || !sourceType) {
+      return res.status(400).json({
+        error: "workspaceId, title, and sourceType are required"
+      });
+    }
+
+    const result = await ingestContent({
+      workspaceId,
+      title,
+      sourceType,
+      file,
+      metadata: metadata || {}
+    });
+
+    return res.json({
+      message: "Document ingested successfully",
+      content: result.content,
+      chunks: result.chunks
+    });
+  } catch (err) {
+    console.error("uploadDocument error:", err);
+    return res.status(500).json({ error: "Document ingestion failed" });
+  }
+}
+
+/**
+ * GET /api/documents?workspaceId=...
+ * List all documents in a workspace.
+ */
+export async function listDocuments(req, res) {
+  try {
+    const { workspaceId } = req.query;
+
+    if (!workspaceId) {
+      return res.status(400).json({ error: "workspaceId is required" });
+    }
+
+    const docs = await contentRepo.listByWorkspace(workspaceId);
+
+    return res.json(docs);
+  } catch (err) {
+    console.error("listDocuments error:", err);
+    return res.status(500).json({ error: "Failed to list documents" });
+  }
+}
+
+/**
+ * GET /api/documents/:id
+ * Fetch a single document.
+ */
+export async function getDocument(req, res) {
+  try {
+    const { id } = req.params;
+
+    const doc = await contentRepo.getById(id);
+    if (!doc) {
+      return res.status(404).json({ error: "Document not found" });
+    }
+
+    return res.json(doc);
+  } catch (err) {
+    console.error("getDocument error:", err);
+    return res.status(500).json({ error: "Failed to fetch document" });
+  }
+}
+
+/**
+ * GET /api/documents/:id/chunks
+ * Fetch all chunks for a document.
+ */
+export async function getDocumentChunks(req, res) {
+  try {
+    const { id } = req.params;
+
+    const doc = await contentRepo.getById(id);
+    if (!doc) {
+      return res.status(404).json({ error: "Document not found" });
+    }
+
+    const chunks = await chunkRepo.listByContent(id);
+
+    return res.json(chunks);
+  } catch (err) {
+    console.error("getDocumentChunks error:", err);
+    return res.status(500).json({ error: "Failed to fetch chunks" });
+  }
+}
+
+/**
+ * DELETE /api/documents/:id
+ * Delete a document (cascades to chunks + tags).
+ */
+export async function deleteDocument(req, res) {
+  try {
+    const { id } = req.params;
+
+    const doc = await contentRepo.getById(id);
+    if (!doc) {
+      return res.status(404).json({ error: "Document not found" });
+    }
+
+    await contentRepo.delete(id);
+
+    return res.json({ message: "Document deleted" });
+  } catch (err) {
+    console.error("deleteDocument error:", err);
+    return res.status(500).json({ error: "Failed to delete document" });
+  }
+}
