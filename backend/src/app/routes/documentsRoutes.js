@@ -1,29 +1,16 @@
 // backend/src/app/routes/documentsRoutes.js
 
-import express from "express";
+import { Router } from "express";
 import {
-  uploadDocument,
-  listDocuments,
-  getDocument,
-  getDocumentChunks,
-  deleteDocument
+  createDocument,
+  chunkDocument,
+  embedDocument,
 } from "../controllers/documentsController.js";
 
-const router = express.Router();
+const router = Router();
 
-// Upload + ingest a document
-router.post("/upload", uploadDocument);
-
-// List all documents in a workspace
-router.get("/", listDocuments);
-
-// Get a single document
-router.get("/:id", getDocument);
-
-// Get all chunks for a document
-router.get("/:id/chunks", getDocumentChunks);
-
-// Delete a document (cascades to chunks + tags)
-router.delete("/:id", deleteDocument);
+router.post("/", createDocument);
+router.post("/:id/chunk", chunkDocument);
+router.post("/:id/embed", embedDocument);
 
 export default router;

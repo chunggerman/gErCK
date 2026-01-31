@@ -1,42 +1,44 @@
-import { WorkspaceRepositoryPostgres } from "../../repositories/postgres/workspaceRepositoryPostgres.js";
-import { db } from "../../infra/db/client.js";
+// backend/src/app/controllers/workspaceController.js
 
-const repo = new WorkspaceRepositoryPostgres();
+import { v4 as uuid } from "uuid";
+import pool from "../../infra/db/pool.js";
 
-export const createWorkspace = async (req, res) => {
+export async function createWorkspace(req, res) {
   try {
-    const { name, description } = req.body;
-    const workspace = await repo.create({ name, description });
-    res.json({ workspace });
-  } catch (err) {
-    console.error("createWorkspace error:", err);
-    res.status(500).json({ error: "Failed to create workspace" });
-  }
-};
+    const { tenant_id, name } = req.body;
 
-export const listWorkspaces = async (req, res) => {
-  try {
-    const workspaces = await repo.list();
-    res.json({ workspaces });
-  } catch (err) {
-    console.error("listWorkspaces error:", err);
-    res.status(500).json({ error: "Failed to list workspaces" });
-  }
-};
-
-export const getWorkspaceAIConfig = async (req, res) => {
-  const { id } = req.params;
-  const client = await db.connect();
-  try {
-    const result = await client.query(
-      "SELECT ai_config FROM workspace WHERE id = $1",
-      [id]
-    );
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: "Workspace not found" });
+    if (!tenant_id || !name || name.trim() === "") {
+      return res.status(400).json({ error: "Missing required fields" });
     }
-    res.json({ aiConfig: result.rows[0].ai_config });
+
+    const tenant = await pool.query(
+      "SELECT id FROM tenants WHERE id = $1 LIMIT 1",
+      [tenant_id]
+    );
+
+    if (tenant.rows.length === 0) {
+      return res.status(400).json({ error: "invalid tenant_id" });
+    }
+
+    const existing = await pool.query(
+      "SELECT id FROM workspaces WHERE tenant_id = $1 AND name = $2 LIMIT 1",
+      [tenant_id, name]
+    );
+
+    if (existing.rows.length > 0) {
+      return res.status(409).json({ error: "Workspace already exists" });
+    }
+
+    const id = uuid();
+
+    await pool.query(
+      "INSERT INTO workspaces (id, tenant_id, name) VALUES ($1, $2, $3)",
+      [id, tenant_id, name]
+    );
+
+    return res.status(201).json({ id, tenant_id, name });
   } catch (err) {
-    console.error("getWorkspaceAIConfig error:", err);
-    res.status(500).json({ error: "Failed to fetch workspace AI config" });
-  } finally
+    console.error("CREATE WORKSPACE ERROR:", err);
+    return res.status(500).json({ error: "Failed to create workspace" });
+  }
+}

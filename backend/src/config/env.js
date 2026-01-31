@@ -1,13 +1,19 @@
 // backend/src/config/env.js
 
 import dotenv from "dotenv";
-import { fileURLToPath } from "url";
 import path from "path";
+import { fileURLToPath } from "url";
 
-// Resolve backend/.env explicitly
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const envPath = path.resolve(__dirname, "../../.env");
+
+// Resolve backend root explicitly
+const backendRoot = path.resolve(__dirname, "../..");
+
+// Load .env from backend/.env
+const envPath = path.join(backendRoot, ".env");
+
+console.log("LOADING ENV FROM:", envPath);
 
 dotenv.config({ path: envPath });
 
@@ -19,12 +25,3 @@ export const env = {
   DB_NAME: process.env.DB_NAME,
   PORT: process.env.PORT || 3001
 };
-
-console.log("ENV LOADED IN CONFIG:", {
-  path: envPath,
-  host: env.DB_HOST,
-  port: env.DB_PORT,
-  user: env.DB_USER,
-  pass: env.DB_PASSWORD,
-  name: env.DB_NAME
-});

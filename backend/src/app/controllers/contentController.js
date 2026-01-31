@@ -1,6 +1,6 @@
 // backend/src/app/controllers/contentController.js
 
-import { retrieveRelevantChunks } from "../services/ragService.js";
+import { runRagAnswer } from "../services/ragService.js";
 
 export async function searchContent(req, res) {
   try {

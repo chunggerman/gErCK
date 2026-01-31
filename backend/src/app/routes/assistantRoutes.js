@@ -1,15 +1,14 @@
-import express from "express";
+// backend/src/app/routes/assistantRoutes.js
+
+import { Router } from "express";
 import {
   createAssistant,
-  getAssistant,
-  updateAssistant
+  queryAssistant,
 } from "../controllers/assistantController.js";
 
-const router = express.Router();
+const router = Router();
 
-// Builder endpoints
 router.post("/", createAssistant);
-router.get("/:id", getAssistant);
-router.put("/:id", updateAssistant);
+router.post("/:id/query", queryAssistant);
 
 export default router;

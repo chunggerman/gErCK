@@ -1,61 +1,46 @@
 // backend/src/app/services/workspaceService.js
 
-import { WorkspaceRepositoryPostgres } from "../../repositories/postgres/workspaceRepositoryPostgres.js";
 import { db } from "../../infra/db/client.js";
 
-const repo = new WorkspaceRepositoryPostgres();
-
-// Create workspace
-export async function createWorkspace(data) {
-  return repo.create(data);
+async function getWorkspace(id) {
+  const result = await db.query(
+    `
+    SELECT *
+    FROM workspaces
+    WHERE id = $1
+    `,
+    [id]
+  );
+  return result.rows[0] || null;
 }
 
-// List workspaces
-export async function listWorkspaces() {
-  return repo.list();
+async function getAIConfig(id) {
+  const result = await db.query(
+    `
+    SELECT ai_config
+    FROM workspaces
+    WHERE id = $1
+    `,
+    [id]
+  );
+  return result.rows[0]?.ai_config || null;
 }
 
-// Get workspace by ID
-export async function getWorkspace(id) {
-  return repo.getById(id);
+async function updateAIConfig(id, aiConfig) {
+  const result = await db.query(
+    `
+    UPDATE workspaces
+    SET ai_config = $1
+    WHERE id = $2
+    RETURNING *
+    `,
+    [aiConfig, id]
+  );
+  return result.rows[0] || null;
 }
 
-// Assistant CRUD (used by assistantController)
-export async function createAssistant(data) {
-  return repo.createAssistant(data);
-}
-
-export async function getAssistant(id) {
-  return repo.getAssistant(id);
-}
-
-export async function updateAssistant(id, updates) {
-  return repo.updateAssistant(id, updates);
-}
-
-// Workspace AI config
-export async function getWorkspaceAIConfig(id) {
-  const client = await db.connect();
-  try {
-    const result = await client.query(
-      "SELECT ai_config FROM workspace WHERE id = $1",
-      [id]
-    );
-    return result.rows[0]?.ai_config || null;
-  } finally {
-    client.release();
-  }
-}
-
-export async function updateWorkspaceAIConfig(id, aiConfig) {
-  const client = await db.connect();
-  try {
-    await client.query(
-      "UPDATE workspace SET ai_config = $1 WHERE id = $2",
-      [JSON.stringify(aiConfig), id]
-    );
-    return aiConfig;
-  } finally {
-    client.release();
-  }
-}
+export default {
+  getWorkspace,
+  getAIConfig,
+  updateAIConfig,
+};

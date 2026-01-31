@@ -1,10 +1,7 @@
 // backend/src/app/controllers/chatController.js
 
 import workspaceService from "../services/workspaceService.js";
-import {
-  retrieveRelevantChunks,
-  summarizeRagAnswer
-} from "../services/ragService.js";
+import { runRagAnswer } from "../services/ragService.js";
 import { callLLM, streamLLM } from "../services/llmService.js";
 
 /**
@@ -21,7 +18,6 @@ export async function handleChat(req, res) {
       });
     }
 
-    // Load workspace + assistant config
     const workspace = await workspaceService.getWorkspace(workspaceId);
     const assistant = await workspaceService.getAssistant(assistantId);
 
@@ -29,30 +25,22 @@ export async function handleChat(req, res) {
       return res.status(404).json({ error: "Workspace or assistant not found" });
     }
 
-    // Extract last user message
     const lastUserMessage = messages[messages.length - 1]?.content || "";
 
-    // Retrieve RAG chunks (semantic + tag)
-    const ragChunks = await retrieveRelevantChunks(
+    const ragResult = await runRagAnswer({
+      aiConfig: assistant.aiConfig,
+      tenantId: workspace.tenant_id,
       workspaceId,
-      lastUserMessage,
-      assistant?.retrievalTopK || 5,
-      { tagNames: tags }
-    );
-
-    // Summarize RAG context into a clean answer
-    const { answer, usedChunks } = await summarizeRagAnswer(
-      {
-        question: lastUserMessage,
-        chunks: ragChunks,
-        model: assistant.model || "llama3.1"
-      },
-      callLLM
-    );
+      assistantId,
+      question: lastUserMessage,
+      referenceIds: tags,
+      topK: assistant?.retrievalTopK || 5,
+      metadata: {},
+    });
 
     return res.json({
-      reply: answer,
-      contextChunks: usedChunks
+      reply: ragResult.answer,
+      contextChunks: ragResult.contextChunks
     });
   } catch (err) {
     console.error("handleChat error:", err);
@@ -83,19 +71,21 @@ export async function handleChatStream(req, res) {
 
     const lastUserMessage = messages[messages.length - 1]?.content || "";
 
-    // Retrieve RAG chunks (semantic + tag)
-    const ragChunks = await retrieveRelevantChunks(
+    const ragResult = await runRagAnswer({
+      aiConfig: assistant.aiConfig,
+      tenantId: workspace.tenant_id,
       workspaceId,
-      lastUserMessage,
-      assistant?.retrievalTopK || 5,
-      { tagNames: tags }
-    );
+      assistantId,
+      question: lastUserMessage,
+      referenceIds: tags,
+      topK: assistant?.retrievalTopK || 5,
+      metadata: {},
+    });
 
-    // Build summarization prompt
-    const context = ragChunks
+    const context = ragResult.contextChunks
       .map(
         (c, idx) =>
-          `[#${idx + 1}] (score: ${c.finalScore?.toFixed(3) ?? "n/a"})\n${c.text}`
+          `[#${idx + 1}]\n${c.content}`
       )
       .join("\n\n");
 
@@ -117,9 +107,8 @@ Instructions:
 Answer:
 `;
 
-    // Prepare streaming headers
     res.setHeader("Content-Type", "text/plain; charset=utf-8");
-    res.setHeader("X-RAG-Metadata", JSON.stringify(ragChunks));
+    res.setHeader("X-RAG-Metadata", JSON.stringify(ragResult.contextChunks));
 
     const stream = await streamLLM(prompt, {
       model: assistant.model || "llama3.1"
